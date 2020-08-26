@@ -62,3 +62,18 @@ func UnitVector(v IVec3) Vec3 {
 	e := NewVec3(l, l, l)
 	return Dived(v, *e)
 }
+
+
+func TimesC(v IVec3, k float32) Vec3 {
+	r := NewVec3(v.GetElm(0)*k, v.GetElm(1)*k, v.GetElm(2)*k)
+	return *r
+}
+func DivedC(v IVec3, k float32) Vec3 {
+	r := NewVec3(v.GetElm(0)/k, v.GetElm(1)/k, v.GetElm(2)/k)
+	return *r
+}
+
+func AddC(v IVec3, k float32) Vec3 {
+	r := NewVec3(v.GetElm(0)+k, v.GetElm(1)+k, v.GetElm(2)+k)
+	return *r
+}
