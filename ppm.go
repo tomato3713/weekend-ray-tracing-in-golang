@@ -20,6 +20,7 @@ func main() {
 	fmt.Println("255")
 
 	for j := image_height - 1; j >= 0; j-- {
+		fmt.Errorf("\rScanlines remaining: %d", j)
 		for i := 0; i < image_width; i++ {
 			r := float32(i) / float32(image_width - 1)
 			g := float32(j) / float32(image_height - 1)
@@ -32,4 +33,5 @@ func main() {
 			fmt.Println(ir, ig, ib)
 		}
 	}
+	fmt.Errorf("\nDone.")
 }
