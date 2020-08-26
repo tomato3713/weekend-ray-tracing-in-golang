@@ -6,10 +6,10 @@ type IRay interface {
 
 type Ray struct {
 	Orig point3
-	Dir  vec3
+	Dir  Vec3
 }
 
-func NewRay(orig point3, dir vec3) *Ray {
+func NewRay(orig point3, dir Vec3) *Ray {
 	ray := new(Ray)
 	ray.Orig = orig
 	ray.Dir = dir

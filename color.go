@@ -13,7 +13,7 @@ type IColor interface {
 }
 
 type color struct {
-	vec3
+	Vec3
 }
 
 func NewColor(e1, e2, e3 float32) *color {

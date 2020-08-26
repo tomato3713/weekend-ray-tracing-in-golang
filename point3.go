@@ -13,7 +13,7 @@ type IPoint interface {
 }
 
 type point3 struct {
-	vec3
+	Vec3
 }
 
 func NewPoint3(e1, e2, e3 float32) *point3 {
@@ -24,7 +24,7 @@ func NewPoint3(e1, e2, e3 float32) *point3 {
 	return v
 }
 
-func (v vec3) String() string {
+func (v point3) String() string {
 	return fmt.Sprintf("(%f, %f, %f)", v.e[0], v.e[1], v.e[2])
 }
 
