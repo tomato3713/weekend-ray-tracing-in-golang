@@ -18,7 +18,7 @@ func NewRay(orig point3, dir Vec3) *Ray {
 
 func (r Ray) At(t float32) *point3 {
 	e := NewVec3(t, t, t)
-	v := r.Dir.Times(*e)
+	v := Times(r.Dir, *e)
 
 	p := NewPoint3(r.Orig.X()+v.e[0], r.Orig.Y()+v.e[1], r.Orig.Z()+v.e[2])
 	return p

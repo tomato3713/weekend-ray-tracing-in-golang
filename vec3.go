@@ -5,13 +5,7 @@ import (
 )
 
 type IVec3 interface {
-	Add() Vec3
-	Minus() Vec3
-	Times() Vec3
-
-	Dot() float32
-	Length() float32
-	LengthSquared() float32
+	GetElm(int) float32
 }
 
 type Vec3 struct {
@@ -26,30 +20,45 @@ func NewVec3(e1, e2, e3 float32) *Vec3 {
 	return v
 }
 
-func (v1 Vec3) Add(v2 Vec3) Vec3 {
-	v := NewVec3(v1.e[0]+v2.e[0], v1.e[1]+v2.e[1], v1.e[2]+v2.e[2])
+func (v Vec3) GetElm(k int) float32 {
+	return v.e[k]
+}
+
+func Add(v1, v2 IVec3) Vec3 {
+	v := NewVec3(v1.GetElm(0)+v2.GetElm(0), v1.GetElm(1)+v2.GetElm(1), v1.GetElm(2)+v2.GetElm(2))
 	return *v
 }
 
-func (v1 Vec3) Minus(v2 Vec3) Vec3 {
-	v := NewVec3(v1.e[0]-v2.e[0], v1.e[1]-v2.e[1], v1.e[2]-v2.e[2])
+func Minus(v1, v2 IVec3) Vec3 {
+	v := NewVec3(v1.GetElm(0)-v2.GetElm(0), v1.GetElm(1)-v2.GetElm(1), v1.GetElm(2)-v2.GetElm(2))
 	return *v
 }
 
-func (v1 Vec3) Times(v2 Vec3) Vec3 {
-	v := NewVec3(v1.e[0]*v2.e[0], v1.e[1]*v2.e[1], v1.e[2]*v2.e[2])
+func  Times(v1, v2 IVec3) Vec3 {
+	v := NewVec3(v1.GetElm(0)*v2.GetElm(0), v1.GetElm(1)*v2.GetElm(1), v1.GetElm(2)*v2.GetElm(2))
 	return *v
 }
 
-func (v1 *Vec3) Dot(v2 Vec3) float32 {
-	return v1.e[0]*v2.e[0] + v1.e[1]*v2.e[1] + v2.e[2]*v2.e[2]
+func Dived(v1, v2 IVec3) Vec3 {
+	v := NewVec3(v1.GetElm(0)/v2.GetElm(0), v1.GetElm(1)/v2.GetElm(1), v1.GetElm(2)/v2.GetElm(2))
+	return *v
 }
 
-func (v *Vec3) Length() float32 {
-	ls := float64(v.LengthSquared())
+func Dot(v1, v2 IVec3) float32 {
+	return v1.GetElm(0)*v2.GetElm(0) + v1.GetElm(1)*v2.GetElm(1) + v2.GetElm(2)*v2.GetElm(2)
+}
+
+func Length(v IVec3) float32 {
+	ls := float64(LengthSquared(v))
 	return float32(math.Sqrt(ls))
 }
 
-func (v *Vec3) LengthSquared() float32 {
-	return v.e[0]*v.e[0] + v.e[1]*v.e[1] + v.e[2]*v.e[2]
+func LengthSquared(v IVec3) float32 {
+	return v.GetElm(0)*v.GetElm(0) + v.GetElm(1)*v.GetElm(1) + v.GetElm(2)*v.GetElm(2)
+}
+
+func UnitVector(v IVec3) Vec3 {
+	l := Length(v)
+	e := NewVec3(l, l, l)
+	return Dived(v, *e)
 }

@@ -12,9 +12,7 @@ type IColor interface {
 	B() float32
 }
 
-type color struct {
-	Vec3
-}
+type color Vec3
 
 func NewColor(e1, e2, e3 float32) *color {
 	v := new(color)
@@ -39,4 +37,8 @@ func (c *color) G() float32 {
 }
 func (c *color) B() float32 {
 	return c.e[2]
+}
+
+func (v color) GetElm(k int) float32 {
+	return v.e[k]
 }
