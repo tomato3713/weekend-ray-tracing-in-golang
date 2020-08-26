@@ -5,6 +5,7 @@ import (
 )
 
 type IColor interface {
+	IVec3
 	String() string
 	R() float32
 	G() float32
@@ -29,7 +30,6 @@ func (v color) String() string {
 	b := int32(255.999 * v.B())
 	return fmt.Sprintf("%d %d %d", r, g, b)
 }
-
 
 func (c *color) R() float32 {
 	return c.e[0]

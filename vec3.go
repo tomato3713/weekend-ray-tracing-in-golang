@@ -10,7 +10,7 @@ type IVec3 interface {
 	Times() *vec3
 
 	Dot() float32
-	Length() float32 
+	Length() float32
 	LengthSquared() float32
 }
 
@@ -26,19 +26,19 @@ func NewVec3(e1, e2, e3 float32) *vec3 {
 	return v
 }
 
-func Add(v1, v2 vec3) *vec3 {
+func (v1 *vec3) Add(v2 vec3) *vec3 {
 	return NewVec3(v1.e[0]+v2.e[0], v1.e[1]+v2.e[1], v1.e[2]+v2.e[2])
 }
 
-func Minus(v1, v2 vec3) *vec3 {
+func (v1 *vec3) Minus(v2 vec3) *vec3 {
 	return NewVec3(v1.e[0]-v2.e[0], v1.e[1]-v2.e[1], v1.e[2]-v2.e[2])
 }
 
-func Times(v1, v2 vec3) *vec3 {
+func (v1 *vec3) Times(v2 vec3) *vec3 {
 	return NewVec3(v1.e[0]*v2.e[0], v1.e[1]*v2.e[1], v1.e[2]*v2.e[2])
 }
 
-func Dot(v1, v2 vec3) float32 {
+func (v1 *vec3) Dot(v2 vec3) float32 {
 	return v1.e[0]*v2.e[0] + v1.e[1]*v2.e[1] + v2.e[2]*v2.e[2]
 }
 
@@ -50,4 +50,3 @@ func (v *vec3) Length() float32 {
 func (v *vec3) LengthSquared() float32 {
 	return v.e[0]*v.e[0] + v.e[1]*v.e[1] + v.e[2]*v.e[2]
 }
-
