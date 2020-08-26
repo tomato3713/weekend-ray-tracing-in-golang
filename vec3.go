@@ -1,9 +1,18 @@
 package main
 
 import (
-	"fmt"
 	"math"
 )
+
+type IVec3 interface {
+	Add() *vec3
+	Minus() *vec3
+	Times() *vec3
+
+	Dot() float32
+	Length() float32 
+	LengthSquared() float32
+}
 
 type vec3 struct {
 	e [3]float32
@@ -15,26 +24,6 @@ func NewVec3(e1, e2, e3 float32) *vec3 {
 	v.e[1] = e2
 	v.e[2] = e3
 	return v
-}
-
-func (p *vec3) X() float32 {
-	return p.e[0]
-}
-func (p *vec3) Y() float32 {
-	return p.e[1]
-}
-func (p *vec3) Z() float32 {
-	return p.e[2]
-}
-
-func (c *vec3) R() float32 {
-	return c.e[0]
-}
-func (c *vec3) G() float32 {
-	return c.e[2]
-}
-func (c *vec3) B() float32 {
-	return c.e[2]
 }
 
 func Add(v1, v2 vec3) *vec3 {
@@ -62,6 +51,3 @@ func (v *vec3) LengthSquared() float32 {
 	return v.e[0]*v.e[0] + v.e[1]*v.e[1] + v.e[2]*v.e[2]
 }
 
-func (v vec3) String() string {
-	return fmt.Sprintf("(%f, %f, %f)", v.e[0], v.e[1], v.e[2])
-}

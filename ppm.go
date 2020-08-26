@@ -24,13 +24,11 @@ func main() {
 		for i := 0; i < image_width; i++ {
 			r := float32(i) / float32(image_width - 1)
 			g := float32(j) / float32(image_height - 1)
-			b := 0.25
+			b := float32(0.25)
 
-			ir := int(255.999 * r)
-			ig := int(255.999 * g)
-			ib := int(255.999 * b)
+			color := NewColor(r, g, b)
 
-			fmt.Println(ir, ig, ib)
+			fmt.Println(color)
 		}
 	}
 	fmt.Errorf("\nDone.")
