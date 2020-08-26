@@ -1,5 +1,7 @@
 # Weekend ray tracing in golang
 
+***Now Implemented only until Section 5.1.***
+
 ## a weekend
 Write ppm image.
 ```
