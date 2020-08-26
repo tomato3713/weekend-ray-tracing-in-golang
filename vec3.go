@@ -34,7 +34,7 @@ func Minus(v1, v2 IVec3) Vec3 {
 	return *v
 }
 
-func  Times(v1, v2 IVec3) Vec3 {
+func Times(v1, v2 IVec3) Vec3 {
 	v := NewVec3(v1.GetElm(0)*v2.GetElm(0), v1.GetElm(1)*v2.GetElm(1), v1.GetElm(2)*v2.GetElm(2))
 	return *v
 }
@@ -62,7 +62,6 @@ func UnitVector(v IVec3) Vec3 {
 	e := NewVec3(l, l, l)
 	return Dived(v, *e)
 }
-
 
 func TimesC(v IVec3, k float32) Vec3 {
 	r := NewVec3(v.GetElm(0)*k, v.GetElm(1)*k, v.GetElm(2)*k)
