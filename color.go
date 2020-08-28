@@ -33,7 +33,7 @@ func (c *color) R() float32 {
 	return c.e[0]
 }
 func (c *color) G() float32 {
-	return c.e[2]
+	return c.e[1]
 }
 func (c *color) B() float32 {
 	return c.e[2]

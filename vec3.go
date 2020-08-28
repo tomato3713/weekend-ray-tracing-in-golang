@@ -45,7 +45,7 @@ func Dived(v1, v2 IVec3) Vec3 {
 }
 
 func Dot(v1, v2 IVec3) float32 {
-	return v1.GetElm(0)*v2.GetElm(0) + v1.GetElm(1)*v2.GetElm(1) + v2.GetElm(2)*v2.GetElm(2)
+	return v1.GetElm(0)*v2.GetElm(0) + v1.GetElm(1)*v2.GetElm(1) + v1.GetElm(2)*v2.GetElm(2)
 }
 
 func Length(v IVec3) float32 {

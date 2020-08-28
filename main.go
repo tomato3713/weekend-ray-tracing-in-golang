@@ -20,7 +20,7 @@ func hit_sphere(center *point3, radius float32, r *Ray) float32 {
 	discriminant := float64(b*b - 4*a*c)
 	if( discriminant > 0) {
 		// hit!!
-		return -(-b - float32(math.Sqrt(discriminant))) / (2.0 * a)
+		return (-b - float32(math.Sqrt(discriminant))) / (2.0 * a)
 	} else {
 		// no hit!!
 		return -1.0
@@ -30,7 +30,7 @@ func hit_sphere(center *point3, radius float32, r *Ray) float32 {
 func ray_color(r *Ray) color {
 	t := hit_sphere(NewPoint3(0, 0, -1), 0.5, r)
 	if t > 0.0 {
-		N := UnitVector(Minus(r.At(-t), NewVec3(0, 0, -1)))
+		N := UnitVector(Minus(r.At(t), NewVec3(0, 0, -1)))
 		return color(TimesC(NewColor(N.GetElm(0)+1, N.GetElm(1)+1, N.GetElm(2)+1), 0.5))
 	}
 	// no hit
