@@ -14,13 +14,13 @@ import (
 
 func hit_sphere(center *point3, radius float32, r *Ray) float32 {
 	oc := Minus(r.Orig, center)
-	a := Dot(r.Dir, r.Dir)
-	b := Dot(oc, r.Dir) * 2.0
-	c := Dot(oc, oc) - radius*radius
-	discriminant := float64(b*b - 4*a*c)
-	if( discriminant > 0) {
+	a := LengthSquared(r.Dir)
+	half_b := Dot(oc, r.Dir)
+	c := LengthSquared(oc) - radius*radius
+	discriminant := float64(half_b*half_b - a*c)
+	if discriminant > 0 {
 		// hit!!
-		return (-b - float32(math.Sqrt(discriminant))) / (2.0 * a)
+		return (-half_b - float32(math.Sqrt(discriminant))) / a
 	} else {
 		// no hit!!
 		return -1.0
