@@ -12,21 +12,30 @@ import (
 // PowerShell's redirection is output file in UTF16 encoding by default.
 // REF: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_redirection?view=powershell-7#notes
 
-func hit_sphere(center *point3, radius float32, r *Ray) bool {
+func hit_sphere(center *point3, radius float32, r *Ray) float32 {
 	oc := Minus(r.Orig, center)
 	a := Dot(r.Dir, r.Dir)
 	b := Dot(oc, r.Dir) * 2.0
 	c := Dot(oc, oc) - radius*radius
-	discriminant := b*b - 4*a*c
-	return discriminant > 0
+	discriminant := float64(b*b - 4*a*c)
+	if( discriminant > 0) {
+		// hit!!
+		return -(-b - float32(math.Sqrt(discriminant))) / (2.0 * a)
+	} else {
+		// no hit!!
+		return -1.0
+	}
 }
 
 func ray_color(r *Ray) color {
-	if hit_sphere(NewPoint3(0, 0, -1), 0.5, r) {
-		return *NewColor(1, 0, 0)
+	t := hit_sphere(NewPoint3(0, 0, -1), 0.5, r)
+	if t > 0.0 {
+		N := UnitVector(Minus(r.At(-t), NewVec3(0, 0, -1)))
+		return color(TimesC(NewColor(N.GetElm(0)+1, N.GetElm(1)+1, N.GetElm(2)+1), 0.5))
 	}
+	// no hit
 	unit_direction := point3(UnitVector(r.Dir))
-	t := 0.5 * (unit_direction.Y() + 1.0)
+	t = 0.5 * (unit_direction.Y() + 1.0)
 	c1 := NewColor(1.0, 1.0, 1.0)
 	c2 := NewColor(0.5, 0.7, 1.0)
 	v := Add(TimesC(*c1, 1.0-t), TimesC(*c2, t))
