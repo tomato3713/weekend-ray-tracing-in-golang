@@ -12,7 +12,7 @@ import (
 // PowerShell's redirection is output file in UTF16 encoding by default.
 // REF: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_redirection?view=powershell-7#notes
 
-func hit_sphere(center *point3, radius float32, r *Ray) float32 {
+func hit_sphere(center point3, radius float32, r Ray) float32 {
 	oc := Minus(r.Orig, center)
 	a := LengthSquared(r.Dir)
 	half_b := Dot(oc, r.Dir)
@@ -27,25 +27,23 @@ func hit_sphere(center *point3, radius float32, r *Ray) float32 {
 	}
 }
 
-func ray_color(r *Ray) color {
+func ray_color(r Ray) Color {
 	t := hit_sphere(NewPoint3(0, 0, -1), 0.5, r)
 	if t > 0.0 {
 		N := UnitVector(Minus(r.At(t), NewVec3(0, 0, -1)))
-		return color(TimesC(NewColor(N.GetElm(0)+1, N.GetElm(1)+1, N.GetElm(2)+1), 0.5))
+		return Color(TimesC(NewColor(N.GetElm(0)+1, N.GetElm(1)+1, N.GetElm(2)+1), 0.5))
 	}
 	// no hit
 	unit_direction := point3(UnitVector(r.Dir))
 	t = 0.5 * (unit_direction.Y() + 1.0)
-	c1 := NewColor(1.0, 1.0, 1.0)
-	c2 := NewColor(0.5, 0.7, 1.0)
-	v := Add(TimesC(*c1, 1.0-t), TimesC(*c2, t))
-	return color(v)
+	v := Add(TimesC(NewColor(1.0, 1.0, 1.0), 1.0-t), TimesC(NewColor(0.5, 0.7, 1.0), t))
+	return Color(v)
 }
 
 func main() {
 	aspect_ratio := 16.0 / 9.0
 	image_width := 256
-	image_height := math.Floor(float64(image_width) / aspect_ratio)
+	image_height := int(math.Floor(float64(image_width) / aspect_ratio))
 
 	fmt.Println("P3")
 	fmt.Println(image_width, image_height)
@@ -59,7 +57,7 @@ func main() {
 	horizontal := NewVec3(float32(viewport_width), 0, 0)
 	vertical := NewVec3(0, float32(viewport_height), 0)
 
-	lower_left_corver := Minus(Minus(Minus(origin, DivedC(horizontal, 2)), DivedC(vertical, 2)), *NewVec3(0, 0, float32(focal_length)))
+	lower_left_corver := Minus(Minus(Minus(origin, DivedC(horizontal, 2)), DivedC(vertical, 2)), NewVec3(0, 0, float32(focal_length)))
 
 	for j := image_height - 1; j >= 0; j-- {
 		fmt.Errorf("\rScanlines remaining: %d", j)
@@ -67,7 +65,7 @@ func main() {
 			u := float32(i) / float32(image_width-1)
 			v := float32(j) / float32(image_height-1)
 
-			r := NewRay(*origin, Add(Add(lower_left_corver, TimesC(horizontal, u)), Minus(TimesC(vertical, v), origin)))
+			r := NewRay(origin, Add(Add(lower_left_corver, TimesC(horizontal, u)), Minus(TimesC(vertical, v), origin)))
 
 			pixel_color := ray_color(r)
 			fmt.Println(pixel_color)

@@ -14,12 +14,12 @@ type IPoint interface {
 
 type point3 Vec3
 
-func NewPoint3(e1, e2, e3 float32) *point3 {
+func NewPoint3(e1, e2, e3 float32) point3 {
 	v := new(point3)
 	v.e[0] = e1
 	v.e[1] = e2
 	v.e[2] = e3
-	return v
+	return *v
 }
 
 func (v point3) String() string {

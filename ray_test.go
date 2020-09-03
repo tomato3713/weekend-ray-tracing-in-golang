@@ -10,7 +10,7 @@ func TestRayAt(t *testing.T) {
 
 	orig := NewPoint3(0, 0, 0)
 	dir := NewVec3(1, 2, 3)
-	ray := NewRay(*orig, *dir)
+	ray := NewRay(orig, dir)
 
 	actual := ray.At(1)
 
