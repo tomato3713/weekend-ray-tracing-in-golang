@@ -2,7 +2,12 @@ package main
 
 import (
 	"fmt"
+	"image"
+	"image/color"
+	"image/png"
+	"log"
 	"math"
+	"os"
 )
 
 // REF: https://github.com/RayTracing/raytracing.github.io/blob/7b92650a045a887391bf8148af86c5e6c46c7a9e/books/RayTracingInOneWeekend.html#L77-L105
@@ -45,9 +50,7 @@ func main() {
 	image_width := 256
 	image_height := int(math.Floor(float64(image_width) / aspect_ratio))
 
-	fmt.Println("P3")
-	fmt.Println(image_width, image_height)
-	fmt.Println("255")
+	img := image.NewNRGBA(image.Rect(0, 0, image_width, image_height))
 
 	viewport_height := 2.0
 	viewport_width := aspect_ratio * viewport_height
@@ -68,8 +71,25 @@ func main() {
 			r := NewRay(origin, Add(Add(lower_left_corver, TimesC(horizontal, u)), Minus(TimesC(vertical, v), origin)))
 
 			pixel_color := ray_color(r)
-			fmt.Println(pixel_color)
+			img.Set(i, j,
+				color.RGBA{
+					R: uint8(pixel_color.R() * 255.999),
+					G: uint8(pixel_color.G() * 255.999),
+					B: uint8(pixel_color.B() * 255.999),
+					A: 255,
+				})
 		}
+	}
+	f, err := os.Create("image.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := png.Encode(f, img); err != nil {
+		f.Close()
+		log.Fatal(err)
+	}
+	if err := f.Close(); err != nil {
+		log.Fatal(err)
 	}
 	fmt.Errorf("\nDone.")
 }
